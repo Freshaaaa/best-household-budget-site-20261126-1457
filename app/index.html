@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DompetKeluarga — Anggaran Rumah Tangga Indonesia</title>
+<style>
+:root{--green:#166534;--green2:#15803d;--amber:#ea580c;--amber2:#f59e0b;--ink:#1f2937;--mut:#6b7280;--line:#e5e7eb;--bg:#f7f5ef;--card:#fff;--red:#b91c1c}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+header{background:var(--green);color:#fff;padding:18px 20px 0}
+.wrap{max-width:1120px;margin:0 auto}
+.brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.brand h1{font-size:30px;letter-spacing:.3px}
+.brand h1 b{color:var(--amber2)}
+.brand p{opacity:.88;font-size:14px}
+nav{display:flex;gap:4px;flex-wrap:wrap;margin-top:14px}
+nav a{color:#dcfce7;text-decoration:none;padding:8px 12px;border-radius:8px 8px 0 0;font-size:15px}
+nav a:hover{background:rgba(255,255,255,.14);color:#fff}
+nav a.on{background:var(--bg);color:var(--green);font-weight:700}
+.controls{display:flex;gap:10px;align-items:center;padding:10px 20px;background:#e9f2ea;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.controls label{font-size:14px;color:var(--green);font-weight:600}
+.controls select,.controls input,.controls button{font-size:15px;padding:7px 10px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
+.controls button{background:var(--amber);color:#fff;border-color:var(--amber);font-weight:700;cursor:pointer}
+.controls button.ghost{background:#fff;color:var(--green);border-color:var(--green)}
+main{max-width:1120px;margin:0 auto;padding:18px 20px 30px}
+section.page{display:none}
+section.page.on{display:block}
+h2{font-size:22px;color:var(--green);margin:4px 0}
+.sub{color:var(--mut);font-size:14px;margin-bottom:14px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.card .k{font-size:12.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.4px}
+.card .v{font-size:26px;font-weight:800;color:var(--green);margin-top:2px}
+.card .v small{font-size:14px;font-weight:600;color:var(--mut)}
+.card .d{font-size:13px;color:var(--mut);margin-top:2px}
+.card.warn .v{color:var(--red)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.card h3{font-size:16px;color:var(--green);margin-bottom:4px}
+.card .note{font-size:12.5px;color:var(--mut);margin-top:6px}
+canvas{width:100%;height:auto;display:block}
+.strip{background:#fff7e6;border:1px solid #fde9c0;border-radius:10px;padding:12px 16px;font-size:14px;margin-bottom:14px}
+.strip b{color:#92400e}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+th{cursor:pointer;color:var(--green);user-select:none;white-space:nowrap}
+th:hover{text-decoration:underline}
+tr:hover td{background:#f8faf9}
+.legend{list-style:none;font-size:14px;margin-top:8px}
+.legend li{margin:4px 0}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:7px}
+input.num{width:130px;font-size:14px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;text-align:right}
+.tip{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.tip input{margin-top:4px;width:18px;height:18px}
+.tip b{font-size:14.5px}
+.tip p{font-size:13.5px;color:var(--mut)}
+.tip .save{margin-left:auto;white-space:nowrap;font-weight:700;color:var(--green);font-size:14px}
+footer{border-top:1px solid var(--line);padding:16px 20px 26px;color:var(--mut);font-size:13px}
+footer .wrap p{margin:3px 0}
+.badge{display:inline-block;background:var(--amber);color:#fff;font-size:12px;font-weight:700;border-radius:20px;padding:2px 9px;margin-left:8px;vertical-align:middle}
+@media (max-width:720px){
+  .cards{grid-template-columns:1fr 1fr}
+  .grid2{grid-template-columns:1fr}
+  .brand h1{font-size:24px}
+  .card .v{font-size:22px}
+  nav a{padding:7px 8px;font-size:14px}
+  table{font-size:13px}
+  input.num{width:105px}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="brand"><h1>Dompet<b>Keluarga</b><span class="badge">2026</span></h1><p>Anggaran rumah tangga Indonesia — kalkulator 50/30/20, UMP &amp; harga pokok</p></div>
+<nav id="nav">
+<a href="#/kalkulator" data-page="kalkulator">Kalkulator</a>
+<a href="#/kategori" data-page="kategori">Rincian Belanja</a>
+<a href="#/provinsi" data-page="provinsi">UMP Provinsi</a>
+<a href="#/harga" data-page="harga">Harga Pokok</a>
+<a href="#/tips" data-page="tips">24 Tips Hemat</a>
+</nav>
+</div></header>
+<div class="controls"><div class="wrap" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+<label for="preset">Contoh keluarga:</label>
+<select id="preset">
+<option value="jakarta">Jakarta — 4 orang, Rp8,0 jt/bln</option>
+<option value="bandung">Bandung — 4 orang, Rp5,8 jt/bln</option>
+<option value="yogya">Yogyakarta — 3 orang, Rp4,5 jt/bln</option>
+</select>
+<label for="income">Penghasilan/bln (Rp):</label>
+<input id="income" type="number" min="0" step="50000" value="8000000">
+<label for="rule">Aturan:</label>
+<select id="rule"><option value="50-30-20">50 / 30 / 20</option><option value="60-25-15">60 / 25 / 15</option><option value="70-20-10">70 / 20 / 10</option></select>
+<button id="resetBtn" class="ghost" type="button">Reset contoh</button>
+</div></div>
+<main>
+<section class="page" id="page-kalkulator">
+<h2>Kalkulator anggaran 50/30/20</h2>
+<p class="sub">Ubah penghasilan atau angka di tabel Rincian Belanja — semua kartu, grafik, dan verdict di bawah ini ikut berubah. Aturan 50/30/20: 50% kebutuhan, 30% keinginan, 20% tabungan.</p>
+<div class="cards">
+<div class="card"><div class="k">Penghasilan / bln</div><div class="v" id="cIncome">Rp8,0 jt</div><div class="d" id="cIncomeNote">UMP Jakarta 2026: Rp5.729.876</div></div>
+<div class="card"><div class="k">Total belanja / bln</div><div class="v" id="cSpend">Rp7,7 jt</div><div class="d" id="cSpendNote">15 pos belanja</div></div>
+<div class="card" id="surplusCard"><div class="k">Sisa / bln</div><div class="v" id="cSurplus">Rp300 rb</div><div class="d" id="cSurplusNote">3,8% dari penghasilan</div></div>
+<div class="card"><div class="k">Tabungan / bln</div><div class="v" id="cSave">Rp1,0 jt</div><div class="d" id="cSaveNote">12,5% — target 20%</div></div>
+</div>
+<div class="strip" id="verdict"><b>Verdict:</b> Kebutuhan 70,6% — di atas target 50%. Ini wajar untuk keluarga Jakarta: sewa + makanan saja sudah Rp3,35 jt. Keinginan ditekan ke 13,1% dan tabungan 12,5% — naikkan tabungan dulu Rp600 rb/bln untuk mencapai 20%.</div>
+<div class="grid2">
+<div class="card"><h3>Alokasi: kebutuhan vs keinginan vs tabungan</h3><canvas id="donut" width="520" height="300"></canvas><ul class="legend" id="donutLegend"></ul><p class="note">Donat dihitung dari 15 pos belanja contoh Jakarta. Ubah angka di Rincian Belanja untuk melihat donat berubah.</p></div>
+<div class="card"><h3>Aktual vs target 50/30/20</h3><canvas id="barTarget" width="520" height="300"></canvas><p class="note" id="barNote">Kebutuhan melebihi target 20,6 poin; keinginan di bawah target 16,9 poin; tabungan di bawah target 7,5 poin.</p></div>
+</div>
+<div class="grid2">
+<div class="card"><h3>Proyeksi tabungan 12 bulan</h3><canvas id="lineSave" width="520" height="260"></canvas><p class="note" id="saveProj">Menabung Rp1,0 jt/bln: Rp12,0 jt dalam 12 bulan, Rp60,0 jt dalam 5 tahun (tanpa bunga).</p></div>
+<div class="card"><h3>Dana darurat: berapa bulan tertutup?</h3><div class="v" id="emergMonths" style="font-size:34px;font-weight:800;color:var(--green)">2,1 bulan</div><p class="note">Target dana darurat: 3–6 bulan belanja kebutuhan (Rp5,65 jt/bln → Rp17,0–33,9 jt). Dana darurat saat ini Rp500 rb/bln; dengan laju ini target 3 bulan tercapai dalam 34 bulan. Naikkan ke Rp1 jt/bln dan target tercapai dalam 17 bulan.</p><p class="note" id="emergNote"></p></div>
+</div>
+</section>
+
+<section class="page" id="page-kategori">
+<h2>Rincian belanja — 15 pos, bisa diurutkan &amp; dicari</h2>
+<p class="sub">Contoh keluarga Jakarta, 4 orang, penghasilan Rp8,0 jt/bln. Klik judul kolom untuk mengurutkan. Ketik di kotak cari untuk memfilter. Ubah angka Rp-nya — kalkulator ikut berubah.</p>
+<div class="controls" style="padding:0 0 12px;background:none;border:none"><input id="q" type="search" placeholder="Cari pos belanja, mis. beras, sewa, listrik…" style="flex:1;min-width:220px">
+<select id="catFilter"><option value="">Semua kategori</option><option>Kebutuhan</option><option>Keinginan</option><option>Tabungan</option></select></div>
+<table id="expTable"><thead><tr><th data-k="name">Pos belanja ▲▼</th><th data-k="cat">Kategori ▲▼</th><th data-k="amt">Rp / bulan ▲▼</th><th data-k="pct">% penghasilan ▲▼</th></tr></thead><tbody id="expBody"></tbody><tfoot><tr><td><b>Total</b></td><td></td><td id="expTotal"><b>Rp7.700.000</b></td><td id="expTotalPct"><b>96,3%</b></td></tr></tfoot></table>
+<p class="note" style="margin-top:10px;font-size:13px;color:var(--mut)">Porsi makanan nasional: Susenas Maret 2024, rata-rata rumah tangga menghabiskan 50,1% anggaran untuk makanan, dari rata-rata pengeluaran Rp1.500.556 per orang per bulan. Contoh Jakarta di atas: makanan Rp1,85 jt dari Rp8,0 jt = 23,1% penghasilan keluarga — lebih rendah karena penghasilan di atas rata-rata nasional.</p>
+</section>
+<section class="page" id="page-provinsi">
+<h2>UMP 2026 — 12 provinsi, bisa diurutkan</h2>
+<p class="sub">Upah Minimum Provinsi 2026 (Keputusan Gubernur, PP 49/2025). DKI Jakarta tertinggi Rp5.729.876, Jawa Barat terendah Rp2.317.601. UMK tertinggi nasional: Kota Bekasi Rp5.999.443.</p>
+<div class="grid2">
+<div class="card"><h3>UMP tertinggi vs terendah</h3><canvas id="barUMP" width="520" height="300"></canvas><p class="note">Selisih Jakarta–Jawa Barat: Rp3.412.275/bln (2,5×). Median upah riil pekerja 2024 hanya sedikit di atas Rp2 jt/bln — sekitar 40% di bawah rata-rata upah minimum nasional Rp3,2 jt (studi UGM/IZA, Nov 2026).</p></div>
+<div class="card"><h3>Berapa bulan UMP untuk dana darurat 3 bulan?</h3><p style="font-size:14px" id="umpMath">Keluarga Jakarta butuh dana darurat Rp17,0 jt (3 × Rp5,65 jt kebutuhan). Itu = 3,0× UMP Jakarta, atau 7,3× UMP Jawa Barat.</p><p class="note">Rata-rata upah buruh nasional: Rp3,33 jt/bln (BPS, Sakernas 2025). Satu UMP Jakarta menutup 74% belanja contoh keluarga ini (Rp7,7 jt); butuh dua penghasilan untuk menutup penuh + menabung.</p></div>
+</div>
+<table id="umpTable"><thead><tr><th data-k="prov">Provinsi ▲▼</th><th data-k="ump">UMP 2026 (Rp) ▲▼</th><th data-k="chg">Naik vs 2025 ▲▼</th><th data-k="cover">Menutup belanja contoh ▲▼</th></tr></thead><tbody id="umpBody"></tbody></table>
+</section>
+<section class="page" id="page-harga">
+<h2>Harga pokok — 14 komoditas (PIHPS, 25 Nov 2026)</h2>
+<p class="sub">Harga rata-rata nasional di pasar tradisional, Pusat Informasi Harga Pangan Strategis Bank Indonesia, 25 November 2026. Keranjang bulanan keluarga 4 orang dihitung dari harga ini.</p>
+<div class="grid2">
+<div class="card"><h3>Keranjang belanja bulanan keluarga 4 orang</h3><canvas id="barBasket" width="520" height="280"></canvas><p class="note" id="basketTotal">Total keranjang: Rp1.016.975/bln — beras 20 kg, telur 4 kg, ayam 4 kg, minyak 4 liter, gula 3 kg, bawang merah 1 kg, bawang putih 0,5 kg, daging sapi 1 kg, cabai 1 kg.</p></div>
+<div class="card"><h3>Kenapa harga naik-turun?</h3><p style="font-size:14px">Cabai rawit merah sempat Rp124.400/kg awal November 2026, lalu turun ke Rp89.250/kg pada 25 Nov. Beras medium Rp16.950/kg dan telur Rp28.000/kg relatif stabil. Anggaran makanan yang dipatok per komoditas (bukan per total) lebih tahan terhadap lonjakan satu komoditas.</p><p class="note">Tips: beli beras 20 kg sekaligus (hemat Rp300–500/kg vs eceran), ayam beli utuh lalu potong sendiri, cabai beli saat murah lalu bekukan.</p></div>
+</div>
+<table id="priceTable"><thead><tr><th data-k="name">Komoditas ▲▼</th><th data-k="price">Harga (Rp) ▲▼</th><th data-k="unit">Satuan ▲▼</th><th data-k="qty">Qty/bln keluarga ▲▼</th><th data-k="cost">Biaya/bln ▲▼</th></tr></thead><tbody id="priceBody"></tbody></table>
+</section>
+<section class="page" id="page-tips">
+<h2>24 tips hemat — centang yang sudah dilakukan</h2>
+<p class="sub">Perkiraan hemat per bulan per tips, untuk keluarga contoh Jakarta. Total potensi hemat kalau semua dilakukan: <b id="tipsTotal">Rp2.325.000/bln</b>. Yang dicentang: <b id="tipsDone">0 dari 24</b>, hemat <b id="tipsSaved">Rp0/bln</b>.</p>
+<div class="grid2">
+<div class="card"><h3>Dapur &amp; belanja</h3><div id="tipsA"></div></div>
+<div class="card"><h3>Listrik, air &amp; transport</h3><div id="tipsB"></div></div>
+</div>
+<div class="grid2">
+<div class="card"><h3>Belanja &amp; langganan</h3><div id="tipsC"></div></div>
+<div class="card"><h3>Tabungan &amp; kebiasaan</h3><div id="tipsD"></div></div>
+</div>
+</section>
+</main>
+<footer><div class="wrap">
+<p><b>DompetKeluarga</b> — situs anggaran rumah tangga satu file, bekerja offline, tanpa data dikirim ke mana pun. Semua angka bisa diubah di kalkulator.</p>
+<p>Sumber data: UMP 2026 Keputusan Gubernur (PP 49/2025) via Talenta/Bank Mega; harga pokok PIHPS Bank Indonesia 25 Nov 2026; pengeluaran Susenas Maret 2024 BPS (Rp1.500.556/orang/bln, 50,1% makanan); upah rata-rata Rp3,33 jt/bln BPS Sakernas 2025; median upah riil 2024 studi UGM/IZA Nov 2026. Angka contoh keluarga adalah ilustrasi, bukan nasihat keuangan.</p>
+<p>Kompetisi: <a href="https://make.fun/competitions/best-household-budget-site-20261126-1457">best-household-budget-site-20261126-1457</a> — pot $50, tutup 29 Nov 2026 21:57 WIB.</p>
+</div></footer>
+<script>
+const fmt=n=>'Rp'+Math.round(n).toLocaleString('id-ID');
+const fmtShort=n=>n>=1e6?'Rp'+(n/1e6).toLocaleString('id-ID',{maximumFractionDigits:1})+' jt':n>=1e3?'Rp'+Math.round(n/1e3)+' rb':fmt(n);
+const $=id=>document.getElementById(id);
+const PRESETS={
+jakarta:{income:8000000,exp:{makanan:1850000,sewa:1500000,listrik:400000,internet:250000,transport:700000,pendidikan:600000,kesehatan:250000,iuran:100000,makanluar:450000,hiburan:250000,pakaian:200000,jajan:150000,darurat:500000,pendtab:300000,investasi:200000}},
+bandung:{income:5800000,exp:{makanan:1400000,sewa:900000,listrik:300000,internet:200000,transport:450000,pendidikan:400000,kesehatan:150000,iuran:75000,makanluar:250000,hiburan:150000,pakaian:120000,jajan:80000,darurat:300000,pendtab:200000,investasi:100000}},
+yogya:{income:4500000,exp:{makanan:1100000,sewa:700000,listrik:250000,internet:150000,transport:300000,pendidikan:300000,kesehatan:100000,iuran:50000,makanluar:180000,hiburan:100000,pakaian:80000,jajan:50000,darurat:200000,pendtab:120000,investasi:80000}}};
+const ITEMS=[
+{id:'makanan',name:'Makanan & dapur',cat:'Kebutuhan'},
+{id:'sewa',name:'Sewa rumah',cat:'Kebutuhan'},
+{id:'listrik',name:'Listrik & air',cat:'Kebutuhan'},
+{id:'internet',name:'Internet',cat:'Kebutuhan'},
+{id:'transport',name:'Transportasi',cat:'Kebutuhan'},
+{id:'pendidikan',name:'Pendidikan anak',cat:'Kebutuhan'},
+{id:'kesehatan',name:'Kesehatan',cat:'Kebutuhan'},
+{id:'iuran',name:'Iuran RT / kebersihan',cat:'Kebutuhan'},
+{id:'makanluar',name:'Makan di luar',cat:'Keinginan'},
+{id:'hiburan',name:'Hiburan & streaming',cat:'Keinginan'},
+{id:'pakaian',name:'Pakaian',cat:'Keinginan'},
+{id:'jajan',name:'Jajan & kopi',cat:'Keinginan'},
+{id:'darurat',name:'Dana darurat',cat:'Tabungan'},
+{id:'pendtab',name:'Tabungan pendidikan',cat:'Tabungan'},
+{id:'investasi',name:'Investasi',cat:'Tabungan'}];
+let state={preset:'jakarta',income:8000000,exp:{...PRESETS.jakarta.exp}};
+const UMP=[
+{prov:'DKI Jakarta',ump:5729876,chg:6.17},{prov:'Papua Pegunungan',ump:4508714,chg:6.5},{prov:'Papua Selatan',ump:4508100,chg:6.5},
+{prov:'Aceh',ump:3932552,chg:6.7},{prov:'Riau',ump:3780495,chg:6.3},{prov:'Sumatera Utara',ump:3228949,chg:7.9},
+{prov:'Sumatera Barat',ump:3182955,chg:6.3},{prov:'Banten',ump:3100881,chg:6.74},{prov:'Jawa Timur',ump:2446880,chg:6.11},
+{prov:'DI Yogyakarta',ump:2417495,chg:6.78},{prov:'Jawa Tengah',ump:2327386,chg:7.28},{prov:'Jawa Barat',ump:2317601,chg:5.77}];
+const PRICES=[
+{name:'Beras medium',price:16950,unit:'kg',qty:20},{name:'Beras super',price:18300,unit:'kg',qty:0},
+{name:'Beras bawah',price:15400,unit:'kg',qty:0},{name:'Telur ayam ras',price:28000,unit:'kg',qty:4},
+{name:'Daging ayam ras',price:37350,unit:'kg',qty:4},{name:'Daging sapi kualitas 1',price:151050,unit:'kg',qty:1},
+{name:'Minyak goreng curah',price:20200,unit:'liter',qty:4},{name:'Minyak goreng kemasan',price:24400,unit:'liter',qty:0},
+{name:'Gula pasir premium',price:20550,unit:'kg',qty:3},{name:'Gula pasir lokal',price:19500,unit:'kg',qty:0},
+{name:'Bawang merah',price:40400,unit:'kg',qty:1},{name:'Bawang putih',price:36950,unit:'kg',qty:0.5},
+{name:'Cabai merah besar',price:64200,unit:'kg',qty:1},{name:'Cabai rawit merah',price:89250,unit:'kg',qty:0}];
+const TIPS=[
+{g:'A',t:'Masak 5 hari seminggu, bekal kantor/sekolah',s:350000,d:'Makan di luar Rp25 rb × 20 hari = Rp500 rb; masak sendiri sekitar Rp150 rb untuk porsi yang sama.'},
+{g:'A',t:'Beli beras 20 kg sekaligus, bukan eceran 1 kg',s:80000,d:'Selisih harga grosir vs eceran Rp300–500/kg.'},
+{g:'A',t:'Belanja mingguan dengan daftar, tanpa stok menumpuk',s:200000,d:'Belanja tanpa daftar rata-rata boros 10–15% untuk barang yang akhirnya terbuang.'},
+{g:'A',t:'Ayam beli utuh, potong sendiri, bekukan per porsi',s:60000,d:'Ayam utuh Rp37.350/kg; potongan fillet bisa 1,5× lipat.'},
+{g:'A',t:'Cabai beli saat murah, bekukan dalam wadah kecil',s:40000,d:'Cabai rawit sempat Rp124.400/kg awal Nov, turun ke Rp89.250/kg akhir Nov.'},
+{g:'A',t:'Ganti 2× makan di luar dengan masakan rumah favorit',s:120000,d:'Satu kali makan di luar keluarga 4 orang Rp150–250 rb.'},
+{g:'B',t:'AC 26°C + kipas, matikan saat ruangan kosong',s:120000,d:'Tiap 1°C lebih dingin menaikkan listrik AC sekitar 6%.'},
+{g:'B',t:'Ganti lampu ke LED dan cabut charger menganggur',s:50000,d:'Lampu LED hemat 75% vs pijar; standby load 5–10% tagihan.'},
+{g:'B',t:'Cuci baju 2–3× seminggu dalam muatan penuh',s:40000,d:'Mesin cuci setengah muatan membuang air + listrik per kg cucian.'},
+{g:'B',t:'Naik transportasi umum 3 hari seminggu',s:250000,d:'Bensin + parkir Rp50 rb/hari vs TransJakarta/KRL Rp10–15 rb/hari.'},
+{g:'C',t:'Audit langganan streaming: simpan 1, batalkan sisanya',s:80000,d:'2–3 langganan Rp50–150 rb/bulan masing-masing; yang ditonton rutin biasanya 1.'},
+{g:'C',t:'Beli pakaian saat diskon akhir musim, bukan impulsif',s:70000,d:'Pakaian contoh Rp200 rb/bln; beli 3 bulan sekali saat diskon 30–50%.'},
+{g:'C',t:'Bawa tumbler & bekal kopi dari rumah',s:90000,d:'Kopi Rp20 rb × 20 hari kerja = Rp400 rb/bln.'},
+{g:'C',t:'Bandingkan harga 3 toko sebelum beli elektronik',s:60000,d:'Selisih harga antar toko online untuk barang yang sama sering 5–15%.'},
+{g:'C',t:'Tunda beli keinginan 72 jam (aturan 3 hari)',s:150000,d:'Sebagian besar keinginan impulsif hilang setelah 3 hari menunggu.'},
+{g:'D',t:'Auto-debit tabungan di tanggal gajian, bukan sisa',s:0,d:'Bayar diri sendiri dulu: tabungan jalan walau belanja mepet. Hemat dihitung dari kebiasaan, bukan angka ini.'},
+{g:'D',t:'Dana darurat di rekening terpisah, tanpa kartu debit',s:0,d:'Gesekan kecil mencegah dana darurat terpakai untuk keinginan.'},
+{g:'D',t:'Catat belanja 5 menit tiap malam selama 30 hari',s:100000,d:'Keluarga yang mencatat biasanya menemukan 1–2 kebocoran Rp50–100 rb/bln.'},
+{g:'D',t:'Jual barang tak terpakai 1× sebulan',s:75000,d:'Pakaian, mainan, elektronik lama: Rp50–150 rb/bulan lumrah.'},
+{g:'D',t:'Liburan lokal 1× setahun, bukan 2× ke luar kota',s:80000,d:'Amortisasi: liburan Rp5 jt setahun vs Rp10 jt setahun = hemat Rp400 rb/bln, dihitung konservatif Rp80 rb/bln di sini.'},
+{g:'D',t:'Gunakan air minum isi ulang, bukan botol sekali pakai',s:60000,d:'Galon isi ulang Rp20 rb vs botol Rp5 rb × 30.'},
+{g:'D',t:'Perpanjang umur barang: servis, bukan ganti',s:50000,d:'Servis kipas/AC/setrika Rp50–100 rb vs beli baru Rp300 rb–1 jt.'},
+{g:'D',t:'Makan siang bekal 3× seminggu',s:150000,d:'Bekal Rp15 rb vs beli Rp30 rb, selisih Rp15 rb × 12 hari.'},
+{g:'D',t:'Patok amplop mingguan untuk jajan anak',s:50000,d:'Jajan tanpa batas Rp10 rb/hari/anak cepat jadi Rp400 rb/bln untuk 2 anak.'}];
+function sums(){let n=0,w=0,s=0;for(const it of ITEMS){const v=state.exp[it.id]||0;if(it.cat==='Kebutuhan')n+=v;else if(it.cat==='Keinginan')w+=v;else s+=v}return{needs:n,wants:w,save:s,total:n+w+s}}
+function ruleParts(){const r=$('rule').value.split('-').map(Number);return{needs:r[0],wants:r[1],save:r[2]}}
+function drawDonut(){const c=$('donut'),x=c.getContext('2d');const s=sums();const tot=s.total||1;const cols=['#166534','#ea580c','#0ea5e9'];const vals=[s.needs,s.wants,s.save];const labs=['Kebutuhan','Keinginan','Tabungan'];x.clearRect(0,0,c.width,c.height);let a=-Math.PI/2;vals.forEach((v,i)=>{const sw=v/tot*Math.PI*2;x.beginPath();x.moveTo(260,150);x.arc(260,150,110,a,a+sw);x.closePath();x.fillStyle=cols[i];x.fill();a+=sw});x.beginPath();x.arc(260,150,55,0,Math.PI*2);x.fillStyle='#fff';x.fill();x.fillStyle='#166534';x.font='bold 20px system-ui';x.textAlign='center';x.fillText(fmtShort(s.total),260,146);x.font='13px system-ui';x.fillStyle='#6b7280';x.fillText('total / bulan',260,166);
+$('donutLegend').innerHTML=vals.map((v,i)=>`<li><i style="background:${cols[i]}"></i>${labs[i]}: <b>${fmt(v)}</b> (${(v/tot*100).toFixed(1)}%)</li>`).join('')}
+function drawBars(cv,labels,actual,target,unit){const c=$(cv),x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);const max=Math.max(...actual,...target,10)*1.15;const bw=46,gap=70;labels.forEach((lb,i)=>{const bx=60+i*(bw*2+gap);const ah=actual[i]/max*200,th=target[i]/max*200;x.fillStyle='#166534';x.fillRect(bx,240-ah,bw,ah);x.fillStyle='#f59e0b';x.fillRect(bx+bw+4,240-th,bw,th);x.fillStyle='#1f2937';x.font='12px system-ui';x.textAlign='center';x.fillText(actual[i].toFixed(1)+unit,bx+bw/2,228-ah);x.fillText(target[i].toFixed(1)+unit,bx+bw*1.5+4,228-th);x.fillText(lb,bx+bw,262)});x.fillStyle='#6b7280';x.font='12px system-ui';x.textAlign='left';x.fillText('■ Aktual   ■ Target',20,20)}
+function drawLine(){const c=$('lineSave'),x=c.getContext('2d');const s=sums();x.clearRect(0,0,c.width,c.height);const pts=[];for(let m=0;m<=12;m++)pts.push(s.save*m);const max=Math.max(...pts,1);x.strokeStyle='#e5e7eb';for(let g=0;g<=4;g++){const y=210-g*45;x.beginPath();x.moveTo(50,y);x.lineTo(500,y);x.stroke();x.fillStyle='#6b7280';x.font='11px system-ui';x.textAlign='right';x.fillText(fmtShort(max*g/4),44,y+4)}x.strokeStyle='#166534';x.lineWidth=3;x.beginPath();pts.forEach((v,i)=>{const px=50+i*(450/12),py=210-v/max*180;i?x.lineTo(px,py):x.moveTo(px,py)});x.stroke();x.fillStyle='#166534';x.font='bold 13px system-ui';x.textAlign='center';x.fillText(fmt(pts[12])+' dalam 12 bulan',275,240)}
+function drawUMP(){const c=$('barUMP'),x=c.getContext('2d');const top=[...UMP].sort((a,b)=>b.ump-a.ump).slice(0,6);x.clearRect(0,0,c.width,c.height);const max=top[0].ump*1.1;top.forEach((p,i)=>{const y=30+i*40;const w=p.ump/max*380;x.fillStyle=i===0?'#166534':'#15803d';x.fillRect(120,y,w,24);x.fillStyle='#1f2937';x.font='12px system-ui';x.textAlign='right';x.fillText(p.prov,112,y+17);x.textAlign='left';x.fillText(fmtShort(p.ump),126+w,y+17)})}
+function drawBasket(){const c=$('barBasket'),x=c.getContext('2d');const items=PRICES.filter(p=>p.qty>0);x.clearRect(0,0,c.width,c.height);const max=Math.max(...items.map(p=>p.price*p.qty))*1.15;items.forEach((p,i)=>{const y=24+i*26;const w=p.price*p.qty/max*360;x.fillStyle='#ea580c';x.fillRect(150,y,w,18);x.fillStyle='#1f2937';x.font='12px system-ui';x.textAlign='right';x.fillText(p.name,142,y+14);x.textAlign='left';x.fillText(fmt(p.price*p.qty),156+w,y+14)})}
+function renderAll(){
+const s=sums(),inc=state.income||1,rp=ruleParts();
+$('cIncome').textContent=fmtShort(inc);$('cSpend').textContent=fmtShort(s.total);
+const sur=inc-s.total;$('cSurplus').textContent=fmtShort(Math.max(sur,0))+(sur<0?' (tekor)':'');$('cSurplusNote').textContent=(sur/inc*100).toFixed(1)+'% dari penghasilan';
+$('surplusCard').classList.toggle('warn',sur<0);
+$('cSave').textContent=fmtShort(s.save);$('cSaveNote').textContent=(s.save/inc*100).toFixed(1)+'% — target '+rp.save+'%';
+const np=s.needs/inc*100,wp=s.wants/inc*100,sp=s.save/inc*100;
+$('verdict').innerHTML='<b>Verdict:</b> Kebutuhan '+np.toFixed(1)+'% '+(np>rp.needs?'— di atas target '+rp.needs+'%.':'— dalam target '+rp.needs+'%.')+' Keinginan '+wp.toFixed(1)+'%, tabungan '+sp.toFixed(1)+'% (target '+rp.save+'%). '+(sp<rp.save?'Kekurangan tabungan '+fmt((rp.save/100*inc)-s.save)+'/bln untuk mencapai target. Potong keinginan dulu — lihat 24 Tips Hemat.':"Target tabungan tercapai — pertahankan dan naikkan dana darurat ke 3–6 bulan belanja.");
+$('barNote').textContent='Kebutuhan '+(np-rp.needs).toFixed(1)+' poin vs target; keinginan '+(wp-rp.wants).toFixed(1)+' poin; tabungan '+(sp-rp.save).toFixed(1)+' poin.';
+$('saveProj').textContent='Menabung '+fmt(s.save)+'/bln: '+fmt(s.save*12)+' dalam 12 bulan, '+fmt(s.save*60)+' dalam 5 tahun (tanpa bunga).';
+const emerg=s.needs*3;$('emergMonths').textContent=s.needs>0?(s.save*12/s.needs).toFixed(1)+' bulan':'—';
+$('emergNote').textContent='Dana darurat target 3 bulan: '+fmt(emerg)+'. Dengan tabungan '+fmt(s.save)+'/bln, target tercapai dalam '+Math.ceil(emerg/Math.max(s.save,1))+' bulan.';
+$('umpMath').textContent='Keluarga contoh butuh dana darurat '+fmt(s.needs*3)+' (3 × '+fmt(s.needs)+' kebutuhan). Itu = '+(s.needs*3/5729876).toFixed(1)+'× UMP Jakarta, atau '+(s.needs*3/2317601).toFixed(1)+'× UMP Jawa Barat.';
+drawDonut();drawBars('barTarget',['Kebutuhan','Keinginan','Tabungan'],[np,wp,sp],[rp.needs,rp.wants,rp.save],'%');drawLine();drawUMP();drawBasket();
+renderExp();renderUMP();renderPrices();renderTips();}
+let expSort={k:'amt',dir:-1},umpSort={k:'ump',dir:-1},priceSort={k:'cost',dir:-1};
+function renderExp(){const q=($('q').value||'').toLowerCase(),cf=$('catFilter').value;let rows=ITEMS.map(it=>({it,v:state.exp[it.id]||0})).filter(r=>(!q||r.it.name.toLowerCase().includes(q))&&(!cf||r.it.cat===cf));
+rows.sort((a,b)=>{const k=expSort.k;let av=k==='amt'?a.v:k==='pct'?a.v/state.income:k==='cat'?a.it.cat:a.it.name;let bv=k==='amt'?b.v:k==='pct'?b.v/state.income:k==='cat'?b.it.cat:b.it.name;return(av<bv?-1:av>bv?1:0)*expSort.dir});
+$('expBody').innerHTML=rows.map(r=>`<tr><td>${r.it.name}</td><td>${r.it.cat}</td><td><input class="num" type="number" min="0" step="10000" data-id="${r.it.id}" value="${r.v}"> </td><td>${(r.v/state.income*100).toFixed(1)}%</td></tr>`).join('');
+const s=sums();$('expTotal').innerHTML='<b>'+fmt(s.total)+'</b>';$('expTotalPct').innerHTML='<b>'+(s.total/state.income*100).toFixed(1)+'%</b>';
+document.querySelectorAll('#expBody input').forEach(inp=>inp.addEventListener('change',e=>{state.exp[e.target.dataset.id]=Math.max(0,Number(e.target.value)||0);renderAll()}))}
+function renderUMP(){let rows=[...UMP];rows.sort((a,b)=>{const k=umpSort.k;let av,bv;if(k==='prov'){av=a.prov;bv=b.prov}else if(k==='chg'){av=a.chg;bv=b.chg}else{av=a.ump;bv=b.ump}return(av<bv?-1:av>bv?1:0)*umpSort.dir});
+$('umpBody').innerHTML=rows.map(p=>`<tr><td>${p.prov}</td><td>${fmt(p.ump)}</td><td>+${p.chg}%</td><td>${(p.ump/sums().total*100).toFixed(1)}%</td></tr>`).join('')}
+function renderPrices(){let rows=PRICES.map(p=>({...p,cost:p.price*p.qty}));rows.sort((a,b)=>{const k=priceSort.k;let av=a[k],bv=b[k];return(av<bv?-1:av>bv?1:0)*priceSort.dir});
+$('priceBody').innerHTML=rows.map(p=>`<tr><td>${p.name}</td><td>${fmt(p.price)}</td><td>/${p.unit}</td><td>${p.qty}</td><td>${fmt(p.cost)}</td></tr>`).join('');
+const tot=PRICES.reduce((a,p)=>a+p.price*p.qty,0);$('basketTotal').textContent='Total keranjang: '+fmt(tot)+'/bln — beras 20 kg, telur 4 kg, ayam 4 kg, minyak 4 liter, gula 3 kg, bawang merah 1 kg, bawang putih 0,5 kg, daging sapi 1 kg, cabai 1 kg.'}
+let tipsChecked=new Set();
+function renderTips(){const total=TIPS.reduce((a,t)=>a+t.s,0);$('tipsTotal').textContent=fmt(total)+'/bln';
+let saved=0;tipsChecked.forEach(i=>saved+=TIPS[i].s);$('tipsDone').textContent=tipsChecked.size+' dari 24';$('tipsSaved').textContent=fmt(saved)+'/bln';
+['A','B','C','D'].forEach(g=>{const el=$('tips'+g);el.innerHTML=TIPS.map((t,i)=>({t,i})).filter(x=>x.t.g===g).map(x=>`<label class="tip"><input type="checkbox" data-i="${x.i}" ${tipsChecked.has(x.i)?'checked':''}><span><b>${x.t.t}</b><p>${x.t.d}</p></span><span class="save">${x.t.s?fmt(x.t.s)+'/bln':'kebiasaan'}</span></label>`).join('')});
+document.querySelectorAll('.tip input').forEach(inp=>inp.addEventListener('change',e=>{const i=Number(e.target.dataset.i);e.target.checked?tipsChecked.add(i):tipsChecked.delete(i);renderTips()}))}
+function sortHandler(tableId,sortObj,rerender){document.querySelectorAll('#'+tableId+' th').forEach(th=>th.addEventListener('click',()=>{const k=th.dataset.k;if(sortObj.k===k)sortObj.dir*=-1;else{sortObj.k=k;sortObj.dir=k==='name'||k==='cat'||k==='prov'?1:-1}rerender()}))}
+function showPage(){const h=(location.hash||'#/kalkulator').replace('#/','')||'kalkulator';const page=['kalkulator','kategori','provinsi','harga','tips'].includes(h)?h:'kalkulator';
+document.querySelectorAll('section.page').forEach(s=>s.classList.remove('on'));$('page-'+page).classList.add('on');
+document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.page===page));
+if(page==='kalkulator'||page==='provinsi'||page==='harga')renderAll()}
+$('preset').addEventListener('change',e=>{state.preset=e.target.value;state.income=PRESETS[state.preset].income;state.exp={...PRESETS[state.preset].exp};$('income').value=state.income;renderAll()});
+$('income').addEventListener('change',e=>{state.income=Math.max(0,Number(e.target.value)||0);renderAll()});
+$('rule').addEventListener('change',renderAll);
+$('resetBtn').addEventListener('click',()=>{state.income=PRESETS[state.preset].income;state.exp={...PRESETS[state.preset].exp};$('income').value=state.income;renderAll()});
+$('q').addEventListener('input',renderExp);$('catFilter').addEventListener('change',renderExp);
+sortHandler('expTable',expSort,renderExp);sortHandler('umpTable',umpSort,renderUMP);sortHandler('priceTable',priceSort,renderPrices);
+window.addEventListener('hashchange',showPage);
+showPage();renderAll();
+</script>
+</body>
+</html>
