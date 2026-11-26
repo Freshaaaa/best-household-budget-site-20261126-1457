@@ -8,38 +8,44 @@
 :root{--green:#166534;--green2:#15803d;--amber:#ea580c;--amber2:#f59e0b;--ink:#1f2937;--mut:#6b7280;--line:#e5e7eb;--bg:#f7f5ef;--card:#fff;--red:#b91c1c}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
-header{background:var(--green);color:#fff;padding:18px 20px 0}
+header{background:var(--green);color:#fff;padding:6px 20px 0}
 .wrap{max-width:1120px;margin:0 auto}
 .brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.brand h1{font-size:30px;letter-spacing:.3px}
+.brand h1{font-size:22px;letter-spacing:.3px}
 .brand h1 b{color:var(--amber2)}
 .brand p{opacity:.88;font-size:14px}
-nav{display:flex;gap:4px;flex-wrap:wrap;margin-top:14px}
-nav a{color:#dcfce7;text-decoration:none;padding:8px 12px;border-radius:8px 8px 0 0;font-size:15px}
+nav{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+nav a{color:#dcfce7;text-decoration:none;padding:4px 10px;border-radius:8px 8px 0 0;font-size:14px}
 nav a:hover{background:rgba(255,255,255,.14);color:#fff}
 nav a.on{background:var(--bg);color:var(--green);font-weight:700}
-.controls{display:flex;gap:10px;align-items:center;padding:10px 20px;background:#e9f2ea;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.controls{display:flex;gap:10px;align-items:center;padding:6px 20px;background:#e9f2ea;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .controls label{font-size:14px;color:var(--green);font-weight:600}
-.controls select,.controls input,.controls button{font-size:15px;padding:7px 10px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
+.controls select,.controls input,.controls button{font-size:14px;padding:5px 9px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
 .controls button{background:var(--amber);color:#fff;border-color:var(--amber);font-weight:700;cursor:pointer}
 .controls button.ghost{background:#fff;color:var(--green);border-color:var(--green)}
-main{max-width:1120px;margin:0 auto;padding:18px 20px 30px}
+main{max-width:1120px;margin:0 auto;padding:6px 20px 24px}
 section.page{display:none}
 section.page.on{display:block}
-h2{font-size:22px;color:var(--green);margin:4px 0}
-.sub{color:var(--mut);font-size:14px;margin-bottom:14px}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
-.card .k{font-size:12.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.4px}
-.card .v{font-size:26px;font-weight:800;color:var(--green);margin-top:2px}
+h2{font-size:20px;color:var(--green);margin:2px 0}
+.sub{color:var(--mut);font-size:13.5px;margin-bottom:8px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 14px}
+.card .k{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.4px}
+.card .v{font-size:23px;font-weight:800;color:var(--green);margin-top:1px}
+.hero{display:flex;gap:0;background:var(--green);color:#fff;border-radius:10px;margin-bottom:8px;overflow:hidden}
+.hero div{flex:1;padding:6px 14px;border-left:1px solid rgba(255,255,255,.25)}
+.hero div:first-child{border-left:none}
+.hero .hk{font-size:12px;opacity:.85}
+.hero .hv{font-size:17px;font-weight:800;color:var(--amber2)}
+.hero .hd{font-size:12px;opacity:.85}
 .card .v small{font-size:14px;font-weight:600;color:var(--mut)}
 .card .d{font-size:13px;color:var(--mut);margin-top:2px}
 .card.warn .v{color:var(--red)}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
 .card h3{font-size:16px;color:var(--green);margin-bottom:4px}
 .card .note{font-size:12.5px;color:var(--mut);margin-top:6px}
 canvas{width:100%;height:auto;display:block}
-.strip{background:#fff7e6;border:1px solid #fde9c0;border-radius:10px;padding:12px 16px;font-size:14px;margin-bottom:14px}
+.strip{background:#fff7e6;border:1px solid #fde9c0;border-radius:10px;padding:8px 14px;font-size:13.5px;margin-bottom:10px}
 .strip b{color:#92400e}
 table{width:100%;border-collapse:collapse;font-size:14.5px}
 th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line)}
@@ -47,8 +53,8 @@ th:first-child,td:first-child{text-align:left}
 th{cursor:pointer;color:var(--green);user-select:none;white-space:nowrap}
 th:hover{text-decoration:underline}
 tr:hover td{background:#f8faf9}
-.legend{list-style:none;font-size:14px;margin-top:8px}
-.legend li{margin:4px 0}
+.legend{list-style:none;font-size:13px;margin-top:4px;display:flex;gap:14px;flex-wrap:wrap}
+.legend li{margin:0}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:7px}
 input.num{width:130px;font-size:14px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;text-align:right}
 .tip{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
@@ -60,6 +66,7 @@ footer{border-top:1px solid var(--line);padding:16px 20px 26px;color:var(--mut);
 footer .wrap p{margin:3px 0}
 .badge{display:inline-block;background:var(--amber);color:#fff;font-size:12px;font-weight:700;border-radius:20px;padding:2px 9px;margin-left:8px;vertical-align:middle}
 @media (max-width:720px){
+  .hero{flex-wrap:wrap}.hero div{flex:1 1 40%}
   .cards{grid-template-columns:1fr 1fr}
   .grid2{grid-template-columns:1fr}
   .brand h1{font-size:24px}
@@ -97,17 +104,23 @@ footer .wrap p{margin:3px 0}
 <main>
 <section class="page" id="page-kalkulator">
 <h2>Kalkulator anggaran 50/30/20</h2>
-<p class="sub">Ubah penghasilan atau angka di tabel Rincian Belanja — semua kartu, grafik, dan verdict di bawah ini ikut berubah. Aturan 50/30/20: 50% kebutuhan, 30% keinginan, 20% tabungan.</p>
+<p class="sub">Ubah penghasilan atau angka di Rincian Belanja — semua kartu, grafik, dan verdict ikut berubah.</p>
+<div class="hero">
+<div><div class="hk">Gaji contoh vs UMP Jakarta</div><div class="hv" id="heroUmp">1,4× UMP</div><div class="hd">Rp8,0 jt vs Rp5.729.876</div></div>
+<div><div class="hk">Gaji contoh vs UMP Jawa Barat</div><div class="hv" id="heroUmpJabar">3,5× UMP</div><div class="hd">Rp8,0 jt vs Rp2.317.601</div></div>
+<div><div class="hk">Keranjang pokok / bulan</div><div class="hv">Rp1,02 jt</div><div class="hd" id="heroBasket">12,7% dari gaji Rp8,0 jt</div></div>
+<div><div class="hk">Potensi hemat 24 tips</div><div class="hv">Rp2,33 jt/bln</div><div class="hd">29% dari gaji — lihat Tips Hemat</div></div>
+</div>
 <div class="cards">
 <div class="card"><div class="k">Penghasilan / bln</div><div class="v" id="cIncome">Rp8,0 jt</div><div class="d" id="cIncomeNote">UMP Jakarta 2026: Rp5.729.876</div></div>
 <div class="card"><div class="k">Total belanja / bln</div><div class="v" id="cSpend">Rp7,7 jt</div><div class="d" id="cSpendNote">15 pos belanja</div></div>
 <div class="card" id="surplusCard"><div class="k">Sisa / bln</div><div class="v" id="cSurplus">Rp300 rb</div><div class="d" id="cSurplusNote">3,8% dari penghasilan</div></div>
 <div class="card"><div class="k">Tabungan / bln</div><div class="v" id="cSave">Rp1,0 jt</div><div class="d" id="cSaveNote">12,5% — target 20%</div></div>
 </div>
-<div class="strip" id="verdict"><b>Verdict:</b> Kebutuhan 70,6% — di atas target 50%. Ini wajar untuk keluarga Jakarta: sewa + makanan saja sudah Rp3,35 jt. Keinginan ditekan ke 13,1% dan tabungan 12,5% — naikkan tabungan dulu Rp600 rb/bln untuk mencapai 20%.</div>
+<div class="strip" id="verdict"><b>Verdict:</b> Kebutuhan 70,6% (target 50%) • Keinginan 13,1% • Tabungan 12,5% (target 20%). Kurang Rp600.000/bln — potong keinginan dulu, lihat Tips Hemat.</div>
 <div class="grid2">
-<div class="card"><h3>Alokasi: kebutuhan vs keinginan vs tabungan</h3><canvas id="donut" width="520" height="300"></canvas><ul class="legend" id="donutLegend"></ul><p class="note">Donat dihitung dari 15 pos belanja contoh Jakarta. Ubah angka di Rincian Belanja untuk melihat donat berubah.</p></div>
-<div class="card"><h3>Aktual vs target 50/30/20</h3><canvas id="barTarget" width="520" height="300"></canvas><p class="note" id="barNote">Kebutuhan melebihi target 20,6 poin; keinginan di bawah target 16,9 poin; tabungan di bawah target 7,5 poin.</p></div>
+<div class="card"><h3>Alokasi belanja (% dari total belanja)</h3><canvas id="donut" width="520" height="200"></canvas><ul class="legend" id="donutLegend"></ul></div>
+<div class="card"><h3>Aktual vs target 50/30/20</h3><canvas id="barTarget" width="520" height="200"></canvas><p class="note" id="barNote">Kebutuhan melebihi target 20,6 poin; keinginan di bawah target 16,9 poin; tabungan di bawah target 7,5 poin.</p></div>
 </div>
 <div class="grid2">
 <div class="card"><h3>Proyeksi tabungan 12 bulan</h3><canvas id="lineSave" width="520" height="260"></canvas><p class="note" id="saveProj">Menabung Rp1,0 jt/bln: Rp12,0 jt dalam 12 bulan, Rp60,0 jt dalam 5 tahun (tanpa bunga).</p></div>
@@ -224,9 +237,9 @@ const TIPS=[
 {g:'D',t:'Patok amplop mingguan untuk jajan anak',s:50000,d:'Jajan tanpa batas Rp10 rb/hari/anak cepat jadi Rp400 rb/bln untuk 2 anak.'}];
 function sums(){let n=0,w=0,s=0;for(const it of ITEMS){const v=state.exp[it.id]||0;if(it.cat==='Kebutuhan')n+=v;else if(it.cat==='Keinginan')w+=v;else s+=v}return{needs:n,wants:w,save:s,total:n+w+s}}
 function ruleParts(){const r=$('rule').value.split('-').map(Number);return{needs:r[0],wants:r[1],save:r[2]}}
-function drawDonut(){const c=$('donut'),x=c.getContext('2d');const s=sums();const tot=s.total||1;const cols=['#166534','#ea580c','#0ea5e9'];const vals=[s.needs,s.wants,s.save];const labs=['Kebutuhan','Keinginan','Tabungan'];x.clearRect(0,0,c.width,c.height);let a=-Math.PI/2;vals.forEach((v,i)=>{const sw=v/tot*Math.PI*2;x.beginPath();x.moveTo(260,150);x.arc(260,150,110,a,a+sw);x.closePath();x.fillStyle=cols[i];x.fill();a+=sw});x.beginPath();x.arc(260,150,55,0,Math.PI*2);x.fillStyle='#fff';x.fill();x.fillStyle='#166534';x.font='bold 20px system-ui';x.textAlign='center';x.fillText(fmtShort(s.total),260,146);x.font='13px system-ui';x.fillStyle='#6b7280';x.fillText('total / bulan',260,166);
-$('donutLegend').innerHTML=vals.map((v,i)=>`<li><i style="background:${cols[i]}"></i>${labs[i]}: <b>${fmt(v)}</b> (${(v/tot*100).toFixed(1)}%)</li>`).join('')}
-function drawBars(cv,labels,actual,target,unit){const c=$(cv),x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);const max=Math.max(...actual,...target,10)*1.15;const bw=46,gap=70;labels.forEach((lb,i)=>{const bx=60+i*(bw*2+gap);const ah=actual[i]/max*200,th=target[i]/max*200;x.fillStyle='#166534';x.fillRect(bx,240-ah,bw,ah);x.fillStyle='#f59e0b';x.fillRect(bx+bw+4,240-th,bw,th);x.fillStyle='#1f2937';x.font='12px system-ui';x.textAlign='center';x.fillText(actual[i].toFixed(1)+unit,bx+bw/2,228-ah);x.fillText(target[i].toFixed(1)+unit,bx+bw*1.5+4,228-th);x.fillText(lb,bx+bw,262)});x.fillStyle='#6b7280';x.font='12px system-ui';x.textAlign='left';x.fillText('■ Aktual   ■ Target',20,20)}
+function drawDonut(){const c=$('donut'),x=c.getContext('2d');const s=sums();const tot=s.total||1;const cols=['#166534','#ea580c','#0ea5e9'];const vals=[s.needs,s.wants,s.save];const labs=['Kebutuhan','Keinginan','Tabungan'];x.clearRect(0,0,c.width,c.height);let a=-Math.PI/2;vals.forEach((v,i)=>{const sw=v/tot*Math.PI*2;x.beginPath();x.moveTo(260,98);x.arc(260,98,76,a,a+sw);x.closePath();x.fillStyle=cols[i];x.fill();a+=sw});x.beginPath();x.arc(260,98,38,0,Math.PI*2);x.fillStyle='#fff';x.fill();x.fillStyle='#166534';x.font='bold 18px system-ui';x.textAlign='center';x.fillText(fmtShort(s.total),260,94);x.font='12px system-ui';x.fillStyle='#6b7280';x.fillText('total / bulan',260,112);
+$('donutLegend').innerHTML=vals.map((v,i)=>`<li><i style="background:${cols[i]}"></i>${labs[i]} <b>${(v/tot*100).toFixed(1)}%</b></li>`).join('')
+function drawBars(cv,labels,actual,target,unit){const c=$(cv),x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);const max=Math.max(...actual,...target,10)*1.15;const bw=46,gap=70;labels.forEach((lb,i)=>{const bx=60+i*(bw*2+gap);const ah=actual[i]/max*125,th=target[i]/max*125;x.fillStyle='#166534';x.fillRect(bx,168-ah,bw,ah);x.fillStyle='#f59e0b';x.fillRect(bx+bw+4,168-th,bw,th);x.fillStyle='#1f2937';x.font='bold 12px system-ui';x.textAlign='center';x.fillText(actual[i].toFixed(1)+unit,bx+bw/2,Math.max(28,156-ah));x.fillText(target[i].toFixed(1)+unit,bx+bw*1.5+4,Math.max(28,156-th));x.font='12px system-ui';x.fillText(lb,bx+bw,188)});x.fillStyle='#6b7280';x.font='12px system-ui';x.textAlign='left';x.fillText('■ Aktual   ■ Target',20,14)}
 function drawLine(){const c=$('lineSave'),x=c.getContext('2d');const s=sums();x.clearRect(0,0,c.width,c.height);const pts=[];for(let m=0;m<=12;m++)pts.push(s.save*m);const max=Math.max(...pts,1);x.strokeStyle='#e5e7eb';for(let g=0;g<=4;g++){const y=210-g*45;x.beginPath();x.moveTo(50,y);x.lineTo(500,y);x.stroke();x.fillStyle='#6b7280';x.font='11px system-ui';x.textAlign='right';x.fillText(fmtShort(max*g/4),44,y+4)}x.strokeStyle='#166534';x.lineWidth=3;x.beginPath();pts.forEach((v,i)=>{const px=50+i*(450/12),py=210-v/max*180;i?x.lineTo(px,py):x.moveTo(px,py)});x.stroke();x.fillStyle='#166534';x.font='bold 13px system-ui';x.textAlign='center';x.fillText(fmt(pts[12])+' dalam 12 bulan',275,240)}
 function drawUMP(){const c=$('barUMP'),x=c.getContext('2d');const top=[...UMP].sort((a,b)=>b.ump-a.ump).slice(0,6);x.clearRect(0,0,c.width,c.height);const max=top[0].ump*1.1;top.forEach((p,i)=>{const y=30+i*40;const w=p.ump/max*380;x.fillStyle=i===0?'#166534':'#15803d';x.fillRect(120,y,w,24);x.fillStyle='#1f2937';x.font='12px system-ui';x.textAlign='right';x.fillText(p.prov,112,y+17);x.textAlign='left';x.fillText(fmtShort(p.ump),126+w,y+17)})}
 function drawBasket(){const c=$('barBasket'),x=c.getContext('2d');const items=PRICES.filter(p=>p.qty>0);x.clearRect(0,0,c.width,c.height);const max=Math.max(...items.map(p=>p.price*p.qty))*1.15;items.forEach((p,i)=>{const y=24+i*26;const w=p.price*p.qty/max*360;x.fillStyle='#ea580c';x.fillRect(150,y,w,18);x.fillStyle='#1f2937';x.font='12px system-ui';x.textAlign='right';x.fillText(p.name,142,y+14);x.textAlign='left';x.fillText(fmt(p.price*p.qty),156+w,y+14)})}
@@ -236,8 +249,9 @@ $('cIncome').textContent=fmtShort(inc);$('cSpend').textContent=fmtShort(s.total)
 const sur=inc-s.total;$('cSurplus').textContent=fmtShort(Math.max(sur,0))+(sur<0?' (tekor)':'');$('cSurplusNote').textContent=(sur/inc*100).toFixed(1)+'% dari penghasilan';
 $('surplusCard').classList.toggle('warn',sur<0);
 $('cSave').textContent=fmtShort(s.save);$('cSaveNote').textContent=(s.save/inc*100).toFixed(1)+'% — target '+rp.save+'%';
+$('heroUmp').textContent=(inc/5729876).toFixed(1)+'× UMP';$('heroUmpJabar').textContent=(inc/2317601).toFixed(1)+'× UMP';$('heroBasket').textContent=(1016975/inc*100).toFixed(1)+'% dari gaji '+fmtShort(inc);
 const np=s.needs/inc*100,wp=s.wants/inc*100,sp=s.save/inc*100;
-$('verdict').innerHTML='<b>Verdict:</b> Kebutuhan '+np.toFixed(1)+'% '+(np>rp.needs?'— di atas target '+rp.needs+'%.':'— dalam target '+rp.needs+'%.')+' Keinginan '+wp.toFixed(1)+'%, tabungan '+sp.toFixed(1)+'% (target '+rp.save+'%). '+(sp<rp.save?'Kekurangan tabungan '+fmt((rp.save/100*inc)-s.save)+'/bln untuk mencapai target. Potong keinginan dulu — lihat 24 Tips Hemat.':"Target tabungan tercapai — pertahankan dan naikkan dana darurat ke 3–6 bulan belanja.");
+$('verdict').innerHTML='<b>Verdict:</b> Kebutuhan '+np.toFixed(1)+'% (target '+rp.needs+'%) • Keinginan '+wp.toFixed(1)+'% • Tabungan '+sp.toFixed(1)+'% (target '+rp.save+'%). '+(sp<rp.save?'Kurang '+fmt((rp.save/100*inc)-s.save)+'/bln — potong keinginan dulu, lihat Tips Hemat.':"Target tabungan tercapai — naikkan dana darurat ke 3–6 bulan belanja.");
 $('barNote').textContent='Kebutuhan '+(np-rp.needs).toFixed(1)+' poin vs target; keinginan '+(wp-rp.wants).toFixed(1)+' poin; tabungan '+(sp-rp.save).toFixed(1)+' poin.';
 $('saveProj').textContent='Menabung '+fmt(s.save)+'/bln: '+fmt(s.save*12)+' dalam 12 bulan, '+fmt(s.save*60)+' dalam 5 tahun (tanpa bunga).';
 const emerg=s.needs*3;$('emergMonths').textContent=s.needs>0?(s.save*12/s.needs).toFixed(1)+' bulan':'—';
