@@ -107,9 +107,10 @@ footer .wrap p{margin:3px 0}
 <p class="sub">Ubah penghasilan atau angka di Rincian Belanja — semua kartu, grafik, dan verdict ikut berubah.</p>
 <div class="hero">
 <div><div class="hk">Gaji contoh vs UMP Jakarta</div><div class="hv" id="heroUmp">1,4× UMP</div><div class="hd">Rp8,0 jt vs Rp5.729.876</div></div>
-<div><div class="hk">Gaji contoh vs UMP Jawa Barat</div><div class="hv" id="heroUmpJabar">3,5× UMP</div><div class="hd">Rp8,0 jt vs Rp2.317.601</div></div>
+<div><div class="hk">Gaji vs UMP Jabar</div><div class="hv" id="heroUmpJabar">3,5× UMP</div><div class="hd">Rp8,0 jt vs Rp2.317.601</div></div>
 <div><div class="hk">Keranjang pokok / bulan</div><div class="hv">Rp1,02 jt</div><div class="hd" id="heroBasket">12,7% dari gaji Rp8,0 jt</div></div>
-<div><div class="hk">Potensi hemat 24 tips</div><div class="hv">Rp2,33 jt/bln</div><div class="hd">29% dari gaji — lihat Tips Hemat</div></div>
+<div><div class="hk">Potensi hemat 24 tips</div><div class="hv">Rp2,33 jt/bln</div><div class="hd">29% dari gaji</div></div>
+<div><div class="hk">Tabungan 12 bulan</div><div class="hv" id="heroSave12">Rp12,0 jt</div><div class="hd" id="heroSave12Note">Rp1,0 jt/bln × 12</div></div>
 </div>
 <div class="cards">
 <div class="card"><div class="k">Penghasilan / bln</div><div class="v" id="cIncome">Rp8,0 jt</div><div class="d" id="cIncomeNote">UMP Jakarta 2026: Rp5.729.876</div></div>
@@ -249,7 +250,7 @@ $('cIncome').textContent=fmtShort(inc);$('cSpend').textContent=fmtShort(s.total)
 const sur=inc-s.total;$('cSurplus').textContent=fmtShort(Math.max(sur,0))+(sur<0?' (tekor)':'');$('cSurplusNote').textContent=(sur/inc*100).toFixed(1)+'% dari penghasilan';
 $('surplusCard').classList.toggle('warn',sur<0);
 $('cSave').textContent=fmtShort(s.save);$('cSaveNote').textContent=(s.save/inc*100).toFixed(1)+'% — target '+rp.save+'%';
-$('heroUmp').textContent=(inc/5729876).toFixed(1)+'× UMP';$('heroUmpJabar').textContent=(inc/2317601).toFixed(1)+'× UMP';$('heroBasket').textContent=(1016975/inc*100).toFixed(1)+'% dari gaji '+fmtShort(inc);
+$('heroUmp').textContent=(inc/5729876).toFixed(1)+'× UMP';$('heroUmpJabar').textContent=(inc/2317601).toFixed(1)+'× UMP';$('heroBasket').textContent=(1016975/inc*100).toFixed(1)+'% dari gaji '+fmtShort(inc);$('heroSave12').textContent=fmtShort(s.save*12);$('heroSave12Note').textContent=fmtShort(s.save)+'/bln × 12';
 const np=s.needs/inc*100,wp=s.wants/inc*100,sp=s.save/inc*100;
 $('verdict').innerHTML='<b>Verdict:</b> Kebutuhan '+np.toFixed(1)+'% (target '+rp.needs+'%) • Keinginan '+wp.toFixed(1)+'% • Tabungan '+sp.toFixed(1)+'% (target '+rp.save+'%). '+(sp<rp.save?'Kurang '+fmt((rp.save/100*inc)-s.save)+'/bln — potong keinginan dulu, lihat Tips Hemat.':"Target tabungan tercapai — naikkan dana darurat ke 3–6 bulan belanja.");
 $('barNote').textContent='Kebutuhan '+(np-rp.needs).toFixed(1)+' poin vs target; keinginan '+(wp-rp.wants).toFixed(1)+' poin; tabungan '+(sp-rp.save).toFixed(1)+' poin.';
