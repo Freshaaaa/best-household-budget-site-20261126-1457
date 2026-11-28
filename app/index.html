@@ -75,6 +75,67 @@ footer .wrap p{margin:3px 0}
   table{font-size:13px}
   input.num{width:105px}
 }
+/* ===== DompetKeluarga v2 (2026-11-28): denser hero, bolder identity ===== */
+.wrap{max-width:1240px!important}
+main{max-width:1220px!important;padding-top:2px!important}
+header{background:linear-gradient(180deg,#14532d 0%,#166534 100%)!important;border-bottom:5px solid #f59e0b!important;padding:2px 0 2px!important}
+header h1{font-size:24px!important;letter-spacing:-.5px!important}
+header .badge{font-size:14px!important;padding:4px 10px!important;background:#f59e0b!important;color:#451a03!important}
+.brand p{font-size:13px!important}
+#nav{margin-top:4px!important}
+#nav a{font-size:14px!important;font-weight:700!important;padding:2px 10px!important}
+.controls{padding:2px 0!important;gap:8px!important;flex-wrap:wrap}
+.controls input,.controls select{font-size:14px!important;padding:4px 8px!important}
+h2{font-size:20px!important;line-height:1.2!important}
+h3{font-size:19px!important}
+#page-kalkulator h2{margin:2px 0!important}
+#page-kalkulator .sub{display:none!important}
+.hero{padding:6px 8px!important;gap:0!important}
+.hero>div{padding:3px 12px!important;line-height:1.25!important}
+.hero .hk{font-size:11px!important}
+.hero .hv{font-size:20px!important;white-space:nowrap!important}
+.hero .hd{display:none!important}
+#page-kalkulator .cards{display:none!important}
+#verdict{display:none!important}
+#page-kalkulator .grid2{margin:2px 0!important}
+.grid2{gap:16px!important}
+.card{border:1px solid #a7f3d0!important;box-shadow:0 2px 10px rgba(20,83,45,.10)!important}
+.v2chartcard h3{margin:2px 0 4px!important;font-size:17px!important}
+.v2chartcard{padding:6px 14px!important}
+.v2row6{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:6px 0}
+.v2card{background:#14532d;border-radius:12px;padding:6px 10px 5px;color:#fff;border-bottom:4px solid #f59e0b}
+.v2card.hot{border-bottom-color:#fde047}
+.v2lab{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;opacity:.92}
+.v2num{font-size:21px;font-weight:800;color:#fbbf24;line-height:1.1;margin-top:2px;white-space:nowrap}
+.v2card.hot .v2num{color:#fde047}
+.v2sub{font-size:11px;opacity:.85;margin-top:2px}
+.v2preset{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:6px 0}
+.v2pcell{background:#fff;border:2px solid #d1d5db;border-radius:12px;padding:5px 10px;cursor:pointer}
+.v2pcell.on{border-color:#f59e0b;background:#fffbeb;box-shadow:0 2px 8px rgba(245,158,11,.25)}
+.v2pcity{font-size:16px;font-weight:800;color:#14532d}
+.v2pline{font-size:13px;color:#374151;margin-top:2px;white-space:nowrap}
+.v2pline b{color:#111827}
+.v2verdict{background:#f59e0b;color:#451a03;font-size:14px;font-weight:800;line-height:1.3;padding:6px 12px;border-radius:12px;margin:6px 0}
+.v2chartcard canvas{width:100%!important;height:auto!important;display:block}
+.v2cap{font-size:14px;font-weight:700;color:#1f2937;margin-top:6px;display:flex;flex-wrap:wrap;gap:2px 14px}
+.v2cap i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px}
+.v2umpcard{margin:10px 0}
+.v2umpcard canvas{width:100%!important;height:auto!important;display:block}
+.v2umpnote{font-size:15px;font-weight:700;color:#14532d;margin:2px 0 8px}
+.v2tips{background:#14532d;border-radius:12px;padding:14px 16px;margin:10px 0;color:#fff}
+.v2tipshead{font-size:19px;font-weight:800;color:#fbbf24}
+.v2tipssub{font-size:14px;opacity:.92;margin:4px 0 10px}
+.v2tiprow{display:flex;align-items:baseline;gap:10px;background:rgba(255,255,255,.08);border-radius:8px;padding:9px 12px;margin-top:6px}
+.v2tiprank{background:#f59e0b;color:#451a03;font-weight:800;border-radius:50%;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 24px;font-size:14px}
+.v2tipname{flex:1;font-size:15px;font-weight:600}
+.v2tipamt{font-weight:800;color:#fbbf24;font-size:16px;white-space:nowrap}
+@media(max-width:640px){
+.v2row6{grid-template-columns:repeat(2,1fr)}
+.v2preset{grid-template-columns:1fr}
+.v2num{font-size:26px}
+.v2verdict{font-size:16px}
+header h1{font-size:28px!important}
+}
 </style>
 </head>
 <body>
@@ -289,6 +350,206 @@ $('q').addEventListener('input',renderExp);$('catFilter').addEventListener('chan
 sortHandler('expTable',expSort,renderExp);sortHandler('umpTable',umpSort,renderUMP);sortHandler('priceTable',priceSort,renderPrices);
 window.addEventListener('hashchange',showPage);
 showPage();renderAll();
+</script>
+<script>
+/* DompetKeluarga v2 (2026-11-28): denser hero, preset strip, UMP-12 chart, top-5 tips.
+   Reads ONLY live v1 values (DOM text + the globals sums/state/ruleParts/fmt/fmtShort/UMP);
+   no v1 data is retyped here. */
+(function(){
+'use strict';
+var $=function(id){return document.getElementById(id)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function txt(el){return el?el.textContent.trim():''}
+function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function closestClass(e,cls){while(e&&!(e.classList&&e.classList.contains(cls)))e=e.parentElement;return e}
+function heroBasketVal(){var hb=$('heroBasket');if(!hb)return '';var cell=hb.parentElement;var hv=cell?cell.querySelector('.hv'):null;return hv?txt(hv):txt(hb);}
+function heroBasketNote(){var hb=$('heroBasket');var n=hb?txt(hb):'';return (n&&n!==heroBasketVal())?n:'keluarga 4 orang';}
+var kalk=$('page-kalkulator');
+var cardsGrid=kalk.querySelector('.cards');
+
+/* ---------- 1. six big stat cards (mirror live v1 values) ---------- */
+var cardsBox=el('div','v2row6');cardsBox.id='v2cards';
+var cardDefs=[
+ {lab:'Penghasilan / bln',get:function(){return txt($('cIncome'))},sub:function(){return txt($('cIncomeNote'))}},
+ {lab:'Total belanja / bln',get:function(){return txt($('cSpend'))},sub:function(){return txt($('cSpendNote'))}},
+ {lab:'Sisa / bln',get:function(){return txt($('cSurplus'))},sub:function(){return txt($('cSurplusNote'))},hot:true},
+ {lab:'Tabungan / bln',get:function(){return txt($('cSave'))},sub:function(){return txt($('cSaveNote'))}},
+ {lab:'Keranjang pokok / bln',get:function(){return heroBasketVal()},sub:function(){return heroBasketNote()}},
+ {lab:'Tabungan 12 bulan',get:function(){return txt($('heroSave12'))},sub:function(){return txt($('heroSave12Note'))}}
+];
+var cardNodes=cardDefs.map(function(d){
+  var c=el('div','v2card'+(d.hot?' hot':''));
+  c.appendChild(el('div','v2lab',esc(d.lab)));
+  var n=el('div','v2num');c.appendChild(n);
+  var s=el('div','v2sub');c.appendChild(s);
+  cardsBox.appendChild(c);
+  return {d:d,n:n,s:s};
+});
+function mirrorCards(){cardNodes.forEach(function(cn){cn.n.textContent=cn.d.get();cn.s.textContent=cn.d.sub();});}
+cardsGrid.parentNode.insertBefore(cardsBox,cardsGrid);
+
+/* ---------- 2. preset comparison strip (numbers computed by v1 itself) ---------- */
+var strip=el('div','v2preset');strip.id='v2presets';
+var presetCount=0;
+function computePresets(){
+  var sel=$('preset');if(!sel)return;
+  var cur=sel.value;
+  strip.innerHTML='';presetCount=0;
+  $$('option',sel).forEach(function(opt){
+    sel.value=opt.value;
+    sel.dispatchEvent(new Event('change',{bubbles:true}));
+    var city=opt.textContent.split('—')[0].trim();
+    var cell=el('div','v2pcell'+(opt.value===cur?' on':''));
+    cell.appendChild(el('div','v2pcity',esc(city)));
+    cell.appendChild(el('div','v2pline','Gaji <b>'+esc(txt($('cIncome')))+'</b> • Belanja <b>'+esc(txt($('cSpend')))+'</b>'));
+    cell.appendChild(el('div','v2pline','Sisa <b>'+esc(txt($('cSurplus')))+'</b> • Tabungan <b>'+esc(txt($('cSave')))+'</b>'));
+    cell.addEventListener('click',function(){sel.value=opt.value;sel.dispatchEvent(new Event('change',{bubbles:true}));});
+    strip.appendChild(cell);presetCount++;
+  });
+  sel.value=cur;
+  sel.dispatchEvent(new Event('change',{bubbles:true}));
+}
+cardsGrid.parentNode.insertBefore(strip,cardsGrid);
+
+/* ---------- 3. verdict banner (mirrors the v1 verdict text) ---------- */
+var banner=el('div','v2verdict');banner.id='v2verdict';
+function mirrorVerdict(){banner.textContent=txt($('verdict'));}
+cardsGrid.parentNode.insertBefore(banner,cardsGrid);
+
+/* ---------- 4. bigger charts: own donut + bars on 2x canvases ---------- */
+var dCard=el('div','card v2chartcard');
+dCard.appendChild(el('h3',null,'Alokasi penghasilan (% dari penghasilan)'));
+var dCv=el('canvas');dCv.id='v2donut';dCv.width=620;dCv.height=175;
+dCard.appendChild(dCv);
+var bCard=el('div','card v2chartcard');
+bCard.appendChild(el('h3',null,'Aktual vs target'));
+var bCv=el('canvas');bCv.id='v2bars';bCv.width=620;bCv.height=170;
+bCard.appendChild(bCv);
+var g2=closestClass($('donut'),'grid2');
+['donut','barTarget'].forEach(function(id){var c=$(id);if(c&&c.parentElement)c.parentElement.style.display='none';});
+if(g2){g2.appendChild(dCard);g2.appendChild(bCard);}
+else{banner.after(dCard);dCard.after(bCard);}
+function drawMyDonut(){
+  var c=$('v2donut');if(!c||typeof sums!=='function')return;var x=c.getContext('2d');
+  var s=sums();var inc=(typeof state!=='undefined'&&state.income)||1;var sur=inc-s.total;
+  var tot=sur>=0?inc:(s.total||1);
+  var vals=sur>=0?[s.needs,s.wants,s.save,sur]:[s.needs,s.wants,s.save];
+  var cols=['#14532d','#ea580c','#0284c7','#d1d5db'];
+  var labs=['Kebutuhan','Keinginan','Tabungan','Sisa'];
+  x.clearRect(0,0,c.width,c.height);
+  var cx=310,cy=88,R=70,r=35,a=-Math.PI/2;
+  vals.forEach(function(v,i){var sw=v/tot*Math.PI*2;x.beginPath();x.moveTo(cx,cy);x.arc(cx,cy,R,a,a+sw);x.closePath();x.fillStyle=cols[i];x.fill();a+=sw;});
+  x.beginPath();x.arc(cx,cy,r,0,Math.PI*2);x.fillStyle='#fff';x.fill();
+  var a2=-Math.PI/2;
+  vals.forEach(function(v,i){var sw=v/tot*Math.PI*2;var sh=v/tot;if(sh>=0.08){var ma=a2+sw/2,rr=60;var lx=cx+Math.cos(ma)*rr,ly=cy+Math.sin(ma)*rr;x.font='800 18px system-ui';x.textAlign='center';x.textBaseline='middle';x.lineWidth=4;x.strokeStyle='rgba(0,0,0,0.35)';x.strokeText((sh*100).toFixed(1)+'%',lx,ly);x.fillStyle='#fff';x.fillText((sh*100).toFixed(1)+'%',lx,ly);}a2+=sw;});
+  x.fillStyle='#14532d';x.font='800 22px system-ui';x.textAlign='center';x.textBaseline='alphabetic';
+  x.fillText(fmtShort(tot),cx,cy-2);
+  x.font='600 12px system-ui';x.fillStyle='#6b7280';x.fillText('per bulan',cx,cy+18);
+}
+function drawMyBars(){
+  var c=$('v2bars');if(!c||typeof sums!=='function'||typeof ruleParts!=='function')return;var x=c.getContext('2d');
+  var s=sums();var inc=(typeof state!=='undefined'&&state.income)||1;
+  var rp=ruleParts();
+  var actual=[s.needs/inc*100,s.wants/inc*100,s.save/inc*100];
+  var target=[rp.needs,rp.wants,rp.save];
+  var labels=['Kebutuhan','Keinginan','Tabungan'];
+  x.clearRect(0,0,c.width,c.height);
+  var max=Math.max.apply(null,actual.concat(target,[10]))*1.15;
+  var bw=72,gap=60,base=145,scale=95;
+  labels.forEach(function(lb,i){
+    var bx=55+i*(bw*2+gap);
+    var ah=actual[i]/max*scale,th=target[i]/max*scale;
+    x.fillStyle='#14532d';x.fillRect(bx,base-ah,bw,ah);
+    x.fillStyle='#f59e0b';x.fillRect(bx+bw+8,base-th,bw,th);
+    x.fillStyle='#111827';x.font='800 18px system-ui';x.textAlign='center';
+    x.fillText(actual[i].toFixed(1)+'%',bx+bw/2,Math.max(26,base-ah-8));
+    x.fillText(target[i].toFixed(1)+'%',bx+bw*1.5+8,Math.max(26,base-th-8));
+    x.font='700 15px system-ui';x.fillText(lb,bx+bw,162);
+  });
+  x.fillStyle='#6b7280';x.font='700 13px system-ui';x.textAlign='left';
+  x.fillText('■ Aktual   ■ Target',24,20);
+}
+
+/* ---------- 5. UMP 2026 — full 12-province bar chart ---------- */
+var umpCard=el('div','card v2umpcard');
+umpCard.appendChild(el('h3',null,'UMP 2026 — 12 provinsi, tertinggi ke terendah'));
+var umpNote=el('div','v2umpnote');umpCard.appendChild(umpNote);
+var uCv=el('canvas');uCv.id='v2ump';uCv.width=1160;uCv.height=440;
+umpCard.appendChild(uCv);
+var provSec=$('page-provinsi');
+var provIntro=provSec.querySelector('p');
+if(provIntro)provIntro.after(umpCard);else provSec.prepend(umpCard);
+function drawUmp12(){
+  var c=$('v2ump');if(!c||typeof UMP==='undefined')return;var x=c.getContext('2d');
+  var rows=UMP.slice().sort(function(a,b){return b.ump-a.ump});
+  x.clearRect(0,0,c.width,c.height);
+  var max=rows[0].ump*1.08,top=18,rowH=35,barH=22,x0=250,maxW=640;
+  rows.forEach(function(p,i){
+    var y=top+i*rowH;
+    var w=p.ump/max*maxW;
+    x.fillStyle=i===0?'#14532d':(i===rows.length-1?'#ea580c':'#15803d');
+    x.fillRect(x0,y,w,barH);
+    x.fillStyle='#111827';x.font='700 19px system-ui';x.textAlign='right';
+    x.fillText(p.prov,x0-14,y+18);
+    x.textAlign='left';x.font='800 19px system-ui';
+    x.fillText(fmtShort(p.ump),x0+w+12,y+18);
+  });
+  umpNote.textContent='Tertinggi '+rows[0].prov+' '+fmt(rows[0].ump)+'  •  Terendah '+rows[rows.length-1].prov+' '+fmt(rows[rows.length-1].ump)+'  •  Selisih '+fmt(rows[0].ump-rows[rows.length-1].ump)+'/bln';
+}
+
+/* ---------- 6. top-5 tips strip (parsed from the live tips list) ---------- */
+var tipsStrip=el('div','v2tips');tipsStrip.id='v2tips';
+var topTipName='';
+function buildTips(){
+  var tips=$$('.tip').map(function(t){
+    var b=t.querySelector('b');
+    var sv=t.querySelector('.save');
+    var name=b?b.textContent.trim():'';
+    var m=sv?sv.textContent.match(/([\d.]+)/):null;
+    if(!m||!name)return null;
+    return {name:name,amt:Number(m[1].replace(/\./g,''))};
+  }).filter(Boolean).sort(function(a,b){return b.amt-a.amt;});
+  var top=tips.slice(0,5);
+  if(top.length)topTipName=top[0].name;
+  var sumTop=top.reduce(function(a,t){return a+t.amt},0);
+  tipsStrip.innerHTML='';
+  tipsStrip.appendChild(el('div','v2tipshead','TOP 5 TIPS HEMAT — paling besar hematnya'));
+  tipsStrip.appendChild(el('div','v2tipssub','Top 5 ini hemat '+fmt(sumTop)+'/bln — dari total potensi '+txt($('tipsTotal'))+'. Centang di bawah kalau sudah dilakukan.'));
+  top.forEach(function(t,i){
+    var row=el('div','v2tiprow');
+    row.appendChild(el('span','v2tiprank',String(i+1)));
+    row.appendChild(el('span','v2tipname',esc(t.name)));
+    row.appendChild(el('span','v2tipamt',fmt(t.amt)+'/bln'));
+    tipsStrip.appendChild(row);
+  });
+  return top;
+}
+var tipsSec=$('page-tips');
+var tipsIntro=tipsSec.querySelector('p');
+if(tipsIntro)tipsIntro.after(tipsStrip);else tipsSec.prepend(tipsStrip);
+
+/* ---------- 7. sync + init ---------- */
+var v2busy=false;
+function v2sync(){
+  if(v2busy)return;v2busy=true;
+  try{
+    computePresets();
+    mirrorCards();
+    mirrorVerdict();
+    drawMyDonut();drawMyBars();
+  }catch(err){console.error('v2sync',err);}
+  v2busy=false;
+}
+var _renderAll=window.renderAll;
+if(typeof _renderAll==='function'){
+  window.renderAll=function(){var r=_renderAll.apply(this,arguments);v2sync();return r;};
+}
+buildTips();drawUmp12();v2sync();
+var st=el('div');st.id='v2selftest';st.style.display='none';
+st.textContent='V2OK cards='+$('v2cards').children.length+' presets='+presetCount+' tipRows='+$$('#v2tips .v2tiprow').length+' umpRows='+(typeof UMP!=='undefined'?UMP.length:0)+' donutBottom='+Math.round($('v2donut').getBoundingClientRect().bottom)+' topTip='+topTipName+' verdictLen='+banner.textContent.length;
+document.body.appendChild(st);
+})();
 </script>
 </body>
 </html>

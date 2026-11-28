@@ -43,3 +43,7 @@ mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 
 - Competition: https://make.fun/competitions/best-household-budget-site-20261126-1457
 - License: MIT
+
+## v2 (2026-11-28, belum submit)
+
+Overhaul presentasi untuk screenshot: hero 6 kartu stat gelap + strip perbandingan 3 preset (Jakarta/Bandung/Yogyakarta, angka dihitung live oleh preset v1) + banner verdict oranye + donat & bar aktual-vs-target baru dengan label % di dalam irisan + bar chart UMP 12 provinsi + strip top-5 tips hemat. Semua angka baru dibaca dari nilai live v1 (DOM + global yang sama) — tidak ada data baru yang diketik. `app/index.html` kini 555 baris. Playtest: 5 rute lolos, 0 JS error; dossier byte-identical (sha256 a62d481b2c9fa3960154404f0c27a87c4398ab08f0788d69ac264e436fb23648).
